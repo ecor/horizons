@@ -1,0 +1,54 @@
+\name{xyFrom2PointLine}
+\alias{xyFrom2PointLine}
+\title{Extraction of  values of a line}
+\usage{
+xyFrom2PointLine(r = NULL, points = data.frame(x = c(0, 1), y = c(0, 1)),
+  step = NULL, radius = NA, angle = NA, units_angle = c("deg", "rad"),
+  fun = NULL, ...)
+}
+\arguments{
+  \item{x}{a Raster* object}
+
+  \item{points}{data frame containing x and y coordinaates
+  from start and end point}
+
+  \item{radius}{length of the segment from the start point
+  (optional)}
+
+  \item{angle}{angle direction of the segment from the
+  start point (optional). It is counterclockwise from
+  East.}
+
+  \item{step}{step used for the extraction of the segment
+  points}
+
+  \item{fun}{optional aggregation function. Default is
+  \code{NULL}. If it not \code{NULL} the functions return a
+  vector containing an atomic aggregate value for each
+  raster layer.}
+
+  \item{...}{further arguments for \code{fun}}
+}
+\description{
+This function extract the values or the xy coordinate of a
+line passing through two points.
+}
+\examples{
+xy_A <- xyFrom2PointLine(points=data.frame(x=c(0,1),y=c(0,1)),step=0.1)
+
+
+dem <- raster(system.file("dem/dem_rendena.asc",package="horizons"))
+
+xP <- (xmax(dem)*0.4+xmin(dem)*0.6)
+yP <- (ymax(dem)*0.4+ymin(dem)*0.6)
+
+xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg")
+
+max_xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=max,na.rm=TRUE)
+min_xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=min,na.rm=TRUE)
+
+
+median_xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=median,na.rm=TRUE)
+median_xy_BA <-  xyFrom2PointLine(r=brick(dem,dem+1),points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=median,na.rm=TRUE)
+}
+

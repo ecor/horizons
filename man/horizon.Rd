@@ -1,0 +1,71 @@
+\name{horizon}
+\alias{horizon}
+\title{Horizon Angle Computation}
+\usage{
+horizon(r, points = data.frame(x = c(0, (xmin(r) + xmax(r))/2), y = c(0,
+  (ymin(r) + ymax(r))/2)), adjust.zero = TRUE, n = 8, radius = 50000,
+  names = NULL)
+}
+\arguments{
+  \item{r}{Raster* object contianing the Digital Elevation
+  Map}
+
+  \item{points}{data frame containing x and y coordinaates}
+
+  \item{adjust.zero}{logical value. It it is \code{TRUE},
+  negative horizon angle are not considered.}
+
+  \item{n}{number of directions used. Default is 8.}
+
+  \item{radius}{see \code{\link{xyFrom2PointLine}}}
+
+  \item{names}{names of the points}
+}
+\value{
+It returns a list of data frames. A list element represents
+a examined point and contains \code{n} horizon angles for
+all \code{n} direction. The vertical horizon angle are
+conterclockwise referred to the horizontal axis and are
+expressed in degree units.
+}
+\description{
+This function calculates the horizon angle of given points
+using an elevation raster map
+}
+\examples{
+library(horizon)
+library(raster)
+
+# First Example: Spare Hull
+side <- 5010
+n <- 501
+
+values <- array(NA,c(n,n))
+coord <- (1:n)/n*side-side/2
+values <- outer(X=coord,Y=coord,FUN=function(x,y) {(x^2+y^2)^0.5})
+
+r <- raster(values, crs=NA,xmn=-side/2,xmx=side/2,ymn=-side/2,ymx=side/2)
+
+
+xpp <- c(-side/3,0,0,0,side/3)
+ypp <- c(0,-side/3,0,side/3,0)
+idp <- c("A","B","O","C","D")
+points <- data.frame(x=xpp,y=ypp,id=idp)
+
+hor <- horizon(r,points=points)
+names(hor) points$id
+
+
+
+
+
+# Second Example
+
+dem <- raster(system.file("dem/dem_rendena.asc",package="horizons"))
+
+horizons <- horizon(dem)
+}
+\seealso{
+\code{\link{xyFrom2PointLine}}
+}
+
