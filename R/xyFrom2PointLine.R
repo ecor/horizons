@@ -7,15 +7,16 @@ NULL
 #' 
 #' This function extract the values or the xy coordinate of a line passing through two points.
 #' 
-#' @param x a Raster*  object
+#' @param r a Raster*  object
 #' @param points data frame containing x and y coordinaates from start and end point
 #' @param radius length of the segment from the start point (optional)
 #' @param angle  angle direction  of the segment from the start point (optional). It is counterclockwise from East.
+#' @param units_angle  string measurement unit \code{angle}. It is \code{c("deg","rad")[1]}, i.e. \code{deg} is the default value. 
 #' @param step step used for  the extraction of the segment points
 #' @param fun optional aggregation function. Default is \code{NULL}. If it not \code{NULL} the functions return a vector containing an atomic aggregate value for each raster layer.
 #' @param ... further arguments for \code{fun} 
 #' 
-#' 
+#' @importFrom raster xmin xmax ymin ymax cellFromXY distance  xres nlayers
 #' @export 
 #' 
 #' @examples
@@ -27,14 +28,14 @@ NULL
 #' xP <- (xmax(dem)*0.4+xmin(dem)*0.6)
 #' yP <- (ymax(dem)*0.4+ymin(dem)*0.6)
 #' 
-#' xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg")
+#' xy_B <- xyFrom2PointLine(r=dem,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg")
 #' 
-#' max_xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=max,na.rm=TRUE)
-#' min_xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=min,na.rm=TRUE)
+#' max_xy_B <- xyFrom2PointLine(r=dem,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=max,na.rm=TRUE)
+#' min_xy_B <- xyFrom2PointLine(r=dem,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=min,na.rm=TRUE)
 #' 
 #' 
-#' median_xy_B <- xyFrom2PointLine(r=dem,points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=median,na.rm=TRUE)
-#' median_xy_BA <-  xyFrom2PointLine(r=brick(dem,dem+1),points,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=median,na.rm=TRUE)
+#' median_xy_B <- xyFrom2PointLine(r=dem,points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=median,na.rm=TRUE)
+#' median_xy_BA <-  xyFrom2PointLine(r=brick(dem,dem+1),points=data.frame(x=xP,y=yP),radius=10000,angle=35,units_angle="deg",fun=median,na.rm=TRUE)
 #' 
 #' 
 xyFrom2PointLine <- function(r=NULL,points=data.frame(x=c(0,1),y=c(0,1)),step=NULL,radius=NA,angle=NA,units_angle=c("deg","rad"),fun=NULL,...) {

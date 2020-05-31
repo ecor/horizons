@@ -1,3 +1,6 @@
+#! /usr/bin/Rscript
+
+
 # file geogr1.R
 #
 # This file roxygenizes all documentation wriiten in "Roxygen" format.

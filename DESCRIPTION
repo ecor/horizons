@@ -9,9 +9,10 @@ Description: This package allows to make computations on one-dimensional line
     over a 2D map. Consequently, the main application consists on computation of
     the horizon height from a terrain observation point.
 Version: 1.0
-Date: 2014-10-08
+Date: 2020-05-30
 Depends:
-    R (>= 2.10),methods,raster,stringr,zoo
+    R (>= 2.10),raster
 Suggests:
     geotopbricks
 URL: NA
+RoxygenNote: 7.1.0

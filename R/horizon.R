@@ -19,7 +19,7 @@ NULL
 #' 
 #' @examples 
 #' 
-#' library(horizon)
+#' library(horizons)
 #' library(raster)
 #' 
 #' # First Example: Spare Hull
@@ -39,7 +39,8 @@ NULL
 #' points <- data.frame(x=xpp,y=ypp,id=idp)
 #' 
 #' hor <- horizon(r,points=points)
-#' names(hor) points$id
+#' names(hor) 
+#' points$id
 #' 
 #' 
 #' 

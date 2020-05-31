@@ -5,15 +5,10 @@ rm(list=ls())
 library(geotopbricks)
 library(horizons)
 
-wpath <- "/home/ecor/attivita/2014/simulazioni_new/rendena100m_20141028_history"    ##/home/ecor/attivita/2014/simulazioni_new/rendena100m_20140930"
-wpath_dtm <- "/media/ecor/MAFTINA/EMANUELE/DTM"
-demfile <- paste(wpath_dtm,"dtm10mUTM32.img",sep="/")
-demfile100 <- paste(wpath_dtm,"dtm100mUTM32.img",sep="/")
+wpath <-  '/home/ecor/local2/data/sims/rendena' 
 
 
-dem <- stack(demfile)[[1]]
-dem100 <- aggregate(dem,fact=10,filename=demfile100,overwrite=TRUE)
-dem <-  dem100 #dem100 #get.geotop.inpts.keyword.value("DemFile",raster=TRUE,wpath=wpath) 
+dem <- get.geotop.inpts.keyword.value("DemFile",raster=TRUE,wpath=wpath)
 
 nmeteo <- get.geotop.inpts.keyword.value("NumberOfMeteoStations",numeric=TRUE,wpath=wpath)
 
@@ -34,7 +29,6 @@ meteopoints_code <- get.geotop.inpts.keyword.value("MeteoStationCode",vector_sep
 names(horizonfiles) <- meteopoints_code
 
 horizons <- horizon(r=dem,points=meteopoints,n=8,names=meteopoints_code)
-
 
 LINE <- 4
 
