@@ -5,7 +5,7 @@ Title: How to get horizon profiles from some points with an elevation raster
     map.
 Type: Package
 Author: Emanuele Cordano
-Description: This package allows to make computations on one-dimensional line
+Description: Computations and analysis on one-dimensional line
     over a 2D map. Consequently, the main application consists on computation of
     the horizon height from a terrain observation point.
 Version: 1.0
@@ -15,4 +15,4 @@ Depends:
 Suggests:
     geotopbricks
 URL: NA
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.3
